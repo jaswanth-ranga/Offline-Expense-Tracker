@@ -1,0 +1,166 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #F4F6F8;        /* Light Gray Background */
+  color: #333333;                   /* Charcoal Gray Text */
+  min-height: 100vh;
+}
+
+header {
+  background: #2C3E50;             /* Deep Indigo */
+  padding: 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(44, 62, 80, 0.3);
+}
+
+header h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #FFFFFF;                  /* White Text */
+}
+
+nav {
+  margin-top: 0.5rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #1ABC9C;                  /* Accent Mint Green */
+  font-weight: bold;
+  margin: 0 0.5rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #1ABC9C;
+  border-radius: 6px;
+  transition: background 0.3s, color 0.3s;
+}
+
+nav a:hover {
+  background-color: #1ABC9C;
+  color: #FFFFFF;
+}
+
+main {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+form {
+  background: #FFFFFF;             /* Card Surface */
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: #333333;
+}
+
+form input,
+form button {
+  width: 100%;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #CCCCCC;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  color: #333333;
+}
+
+form input::placeholder {
+  color: #7F8C8D;                  /* Medium Gray Placeholder */
+}
+
+form input:focus {
+  outline: none;
+  border-color: #1ABC9C;
+  background-color: #F9FDFD;
+}
+
+form button {
+  background-color: #1ABC9C;       /* Accent Button */
+  color: #FFFFFF;
+  font-weight: bold;
+  border: none;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #159C88;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+li {
+  background: #FFFFFF;             /* Card Surface */
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #333333;
+}
+
+li button {
+  background: #E74C3C;             /* Alert Red */
+  color: #FFFFFF;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+li button:hover {
+  background: #C0392B;
+}
+
+#charts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+#charts canvas {
+  width: 40% !important;
+  max-width: 500px;
+  height: auto !important;
+  background: #FFFFFF;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+}
+
+#monthlyTotal {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #27AE60;                  /* Success Green */
+  background: #FFFFFF;
+  padding: 1rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.1);
+}
+
+@media (max-width: 768px) {
+  #charts canvas {
+    width: 90% !important;
+  }
+}
