@@ -1,0 +1,120 @@
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
+
+function saveExpenses() {
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+// 1. Add & List (index.html)
+const form = document.getElementById("expenseForm");
+const list = document.getElementById("expenseList");
+
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const date = document.getElementById("date").value;
+    const category = document.getElementById("category").value;
+    const amount = document.getElementById("amount").value;
+    const description = document.getElementById("description").value;
+
+    if (date && category && amount) {
+      expenses.push({ date, category, amount, description });
+      saveExpenses();
+      form.reset();
+      showExpenses();
+    }
+  });
+}
+
+function showExpenses() {
+  if (!list) return;
+  list.innerHTML = "";
+  expenses.forEach((e, i) => {
+    const li = document.createElement("li");
+    li.innerHTML = `${e.date} - ${e.category} - ₹${e.amount} - ${e.description}
+      <button onclick="deleteExpense(${i})">X</button>`;
+    list.appendChild(li);
+  });
+}
+
+function deleteExpense(index) {
+  expenses.splice(index, 1);
+  saveExpenses();
+  showExpenses();
+}
+
+if (list) showExpenses();
+
+// 2. Monthly Summary (summary.html)
+const summary = document.getElementById("monthlyTotal");
+if (summary) {
+  const currentMonth = new Date().getMonth();
+  let total = 0;
+  expenses.forEach(e => {
+    const d = new Date(e.date);
+    if (d.getMonth() === currentMonth) {
+      total += Number(e.amount);
+    }
+  });
+  summary.textContent = `Total spent this month: ₹${total.toFixed(2)}`;
+}
+
+// 3. Breakdown (breakdown.html)
+const breakdownList = document.getElementById("breakdownList");
+if (breakdownList) {
+  breakdownList.innerHTML = "";
+  expenses.forEach(e => {
+    const li = document.createElement("li");
+    li.textContent = `${e.date} - ${e.category} - ₹${e.amount} - ${e.description}`;
+    breakdownList.appendChild(li);
+  });
+}
+
+// 4. Charts (charts.html)
+if (document.getElementById("pieChart") && document.getElementById("barChart")) {
+  const pieData = {};
+  const barData = {};
+
+  const currentMonth = new Date().getMonth();
+
+  expenses.forEach(e => {
+    const date = new Date(e.date);
+    if (date.getMonth() === currentMonth) {
+      const day = date.getDate();
+      pieData[e.category] = (pieData[e.category] || 0) + Number(e.amount);
+      barData[day] = (barData[day] || 0) + Number(e.amount);
+    }
+  });
+
+  const pieCtx = document.getElementById("pieChart").getContext("2d");
+  const barCtx = document.getElementById("barChart").getContext("2d");
+
+  new Chart(pieCtx, {
+    type: "pie",
+    data: {
+      labels: Object.keys(pieData),
+      datasets: [{
+        data: Object.values(pieData),
+        backgroundColor: ['#ff6384', '#36a2eb', '#ffce56', '#4bc0c0', '#9966ff'],
+      }]
+    }
+  });
+
+  new Chart(barCtx, {
+    type: "bar",
+    data: {
+      labels: Object.keys(barData),
+      datasets: [{
+        label: "Daily Spending",
+        data: Object.values(barData),
+        backgroundColor: "#007bff"
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
