@@ -1,0 +1,68 @@
+// Save user to localStorage
+function saveUser(user) {
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  users.push(user);
+  localStorage.setItem("users", JSON.stringify(users));
+}
+
+// Validate user login
+function validateUser(identifier, password) {
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+  return users.find(user =>
+    (user.mobile === identifier || user.email === identifier) &&
+    user.password === password
+  );
+}
+
+// Login form handler (if you have login.html with #loginForm)
+document.getElementById("loginForm")?.addEventListener("submit", e => {
+  e.preventDefault();
+  const identifier = document.getElementById("loginMobileOrEmail").value;
+  const password = document.getElementById("loginPassword").value;
+
+  const user = validateUser(identifier, password);
+  if (user) {
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    alert("Login successful! Redirecting...");
+    window.location.href = "index.html";
+  } else {
+    alert("Invalid credentials. Try again or register.");
+  }
+});
+
+// Google registration button — redirect immediately to index.html
+document.getElementById("regGoogle")?.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+// Facebook registration button — redirect immediately to index.html
+document.getElementById("regFacebook")?.addEventListener("click", () => {
+  window.location.href = "index.html";
+});
+
+// Register form handler
+document.getElementById("registerForm")?.addEventListener("submit", e => {
+  e.preventDefault();
+
+  const name = document.getElementById("registerName").value.trim();
+  const mobile = document.getElementById("registerMobile").value.trim();
+  const password = document.getElementById("registerPassword").value;
+
+  if (!name || !mobile || !password) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+  // Create user object
+  const user = {
+    name,
+    mobile,
+    email: mobile.includes("@") ? mobile : null,
+    password
+  };
+
+  saveUser(user);
+
+  // Redirect immediately after registration (no alert)
+  window.location.href = "index.html";
+});
