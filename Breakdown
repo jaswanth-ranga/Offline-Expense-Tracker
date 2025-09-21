@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Breakdown | Expense Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    header {
+      position: relative;
+      padding: 20px;
+      background: #F9FAFB;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #2563EB;
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    nav a.active {
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    #logoutBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #EF4444;
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    #logoutBtn:hover {
+      background-color: #dc2626;
+    }
+
+    main {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Expense Breakdown</h1>
+    <button id="logoutBtn">Logout</button>
+    <nav>
+      <a href="index.html">Add Expense</a>
+      <a href="charts.html">Charts</a>
+      <a href="summary.html">Monthly Summary</a>
+      <a href="breakdown.html" class="active">Category Breakdown</a>
+    </nav>
+  </header>
+
+  <main>
+    <ul id="breakdownList"></ul>
+  </main>
+
+  <script>
+    document.getElementById("logoutBtn").addEventListener("click", function () {
+      localStorage.removeItem("loggedInUser");
+      window.location.href = "login.html";
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
